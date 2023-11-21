@@ -341,3 +341,10 @@ button {
    margin: 5% 0% 2% 2%;
   
 }
+.product-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}

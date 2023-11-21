@@ -5,7 +5,7 @@ let currentIndex = 0;
     setInterval(function () {
         currentIndex = (currentIndex < totalItems - 1) ? currentIndex + 1 : 0;
         updateCarousel();
-    }, 3000); // Adjust the interval (in milliseconds) as needed
+    }, 3000);
 
     function updateCarousel() {
         const newTransformValue = -100 * currentIndex + '%';

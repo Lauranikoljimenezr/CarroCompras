@@ -19,6 +19,9 @@
       </div>
       <button class="learn-more" onclick="mostrarCarrito()"><img src="image/carrito-de-compras.png"></button>
     </div>
+    
+  
+   
     <hr>
     <nav class="nav" id="nav">
         <div id="genre-buttons"> 
@@ -49,8 +52,14 @@
         </div>
     </div>
 </div>
+<section>
+  <div id="products-container" class="container"></div>
 
+  <button onclick="sortProducts('desc')">Ordenar Descendente</button>
+  <button onclick="sortProducts('asc')">Ordenar Ascendente</button>
+</section>
 <div class="container">
+
 <!--  
   <div class="card" data-category="">
     <div class="box">
@@ -86,6 +95,7 @@
 <script src="js/carrusel.js"></script>
 <script src="js/target.js"></script>
 <script src="js/busqueda.js"></script>
+<script src="js/modal.js"></script>
 
 
 </body>

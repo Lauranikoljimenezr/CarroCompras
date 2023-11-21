@@ -31,84 +31,115 @@ const products = [
     {id: "product-30", product:"Base tinta", price:100000, image:"./image/base tinta.webp", "data-category":"Base y correctores" },
     
 ];
+function createCard(product) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("data-category", product['data-category']);
 
+    const box = document.createElement("div");
+    box.className = "box";
 
-function createCardsFromArray(productArray) {
-    const container = document.createElement("div");
-    container.className = "container";
+    const cardImg = document.createElement("div");
+    cardImg.className = "card-img";
+    const img = document.createElement("img");
+    img.className = "img3";
+    img.src = product.image;
+    img.alt = product.product;
+    cardImg.appendChild(img);
 
-    productArray.forEach(function (product) {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.setAttribute("data-category", product['data-category']); 
+    const cardInfo = document.createElement("div");
+    cardInfo.className = "card-info";
+    const title = document.createElement("p");
+    title.className = "text-title";
+    title.textContent = product.product;
+    const description = document.createElement("p");
+    description.className = "text-body";
+    description.textContent = "Product description and details";
+    cardInfo.appendChild(title);
+    cardInfo.appendChild(description);
 
-        const box = document.createElement("div");
-        box.className = "box";
+    const cardFooter = document.createElement("div");
+    cardFooter.className = "card-footer";
 
-        const cardImg = document.createElement("div");
-        cardImg.className = "card-img";
-        const img = document.createElement("img");
-        img.className = "img3";
-        img.src = product.image;
-        img.alt = product.product;
-        cardImg.appendChild(img);
+    const cardd = document.createElement("div");
+    cardd.className = "cardd";
+    const price = document.createElement("span");
+    price.className = "text-title";
+    price.textContent = "$" + product.price + " COP";
+    var cardButton = document.createElement("div");
+    cardButton.className = "card-button";
+    const button = document.createElement("button");
+    button.setAttribute("onclick", "buy('" + product.id + "')");
+    const imgButton = document.createElement("img");
+    imgButton.className = "imgsize";
+    imgButton.src = "image/icono.png";
+    button.appendChild(imgButton);
+    cardButton.appendChild(button);
+    cardd.appendChild(price);
+    cardd.appendChild(cardButton);
 
-        const cardInfo = document.createElement("div");
-        cardInfo.className = "card-info";
-        const title = document.createElement("p");
-        title.className = "text-title";
-        title.textContent = product.product;
-        const description = document.createElement("p");
-        description.className = "text-body";
-        description.textContent = "Product description and details";
-        cardInfo.appendChild(title);
-        cardInfo.appendChild(description);
+    const c = document.createElement("div");
+    c.className = "c";
+    const size = document.createElement("p");
+    size.id = "size";
+    size.textContent = "Disponible: ";
+    const spanAvailable = document.createElement("span");
+    spanAvailable.className = "available";
+    spanAvailable.setAttribute("data-id", product.id);
+    const sizeCategory = document.createElement("div");
+    sizeCategory.className = "sizeCategory";
+    sizeCategory.textContent = "Category: " + product['data-category'];
+    size.appendChild(spanAvailable);
+    c.appendChild(size);
+    c.appendChild(sizeCategory);
 
-        const cardFooter = document.createElement("div");
-        cardFooter.className = "card-footer";
+    card.appendChild(box);
+    box.appendChild(cardImg);
+    box.appendChild(cardInfo);
+    box.appendChild(cardFooter);
+    cardFooter.appendChild(cardd);
+    cardFooter.appendChild(document.createElement("br"));
+    cardFooter.appendChild(document.createElement("br"));
+    cardFooter.appendChild(c);
 
-        const cardd = document.createElement("div");
-        cardd.className = "cardd";
-        const price = document.createElement("span");
-        price.className = "text-title";
-        price.textContent = "$" + product.price + " COP";
-        var cardButton = document.createElement("div");
-        cardButton.className = "card-button";
-        const button = document.createElement("button");
-        button.setAttribute("onclick", "buy('" + product.id + "')");
-        const imgButton = document.createElement("img");
-        imgButton.className = "imgsize";
-        imgButton.src = "image/icono.png"; 
-        button.appendChild(imgButton);
-        cardButton.appendChild(button);
-        cardd.appendChild(price);
-        cardd.appendChild(cardButton);
-
-        const c = document.createElement("div");
-        c.className = "c";
-        const size = document.createElement("p");
-        size.id = "size";
-        size.textContent = "Disponible: "; 
-        const spanAvailable = document.createElement("span");
-        spanAvailable.className = "available";
-        spanAvailable.setAttribute("data-id", product.id);
-        const sizeCategory = document.createElement("div");
-        sizeCategory.className = "sizeCategory";
-        sizeCategory.textContent = "Category: " + product['data-category']; 
-        size.appendChild(spanAvailable);
-        c.appendChild(size);
-        c.appendChild(sizeCategory);
-
-        card.appendChild(box);
-        box.appendChild(cardImg);
-        box.appendChild(cardInfo);
-        box.appendChild(cardFooter);
-        cardFooter.appendChild(cardd);
-        cardFooter.appendChild(document.createElement("br"));
-        cardFooter.appendChild(document.createElement("br"));
-        cardFooter.appendChild(c);
-
-       container.appendChild(card);
-    });
-    document.body.appendChild(container);
+    return card;
 }
+
+function displayProducts(productArray) {
+    const container = document.getElementById("products-container");
+    container.innerHTML = ""; // Limpiar el contenedor antes de volver a mostrar
+
+    productArray.forEach(product => {
+        const card = createCard(product);
+        container.appendChild(card);
+    });
+}
+
+function sortProducts(order) {
+    const sortedProducts = products.slice().sort((a, b) => {
+        return order === 'desc' ? b.price - a.price : a.price - b.price;
+    });
+
+    displayProducts(sortedProducts);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    displayProducts(products);
+
+    const target = Array.from(document.querySelectorAll('.card'));
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        target.forEach(tarjeta => {
+            const title = tarjeta.querySelector('.text-title').textContent.toLowerCase();
+
+            if (title.includes(searchTerm)) {
+                tarjeta.style.display = 'block';
+            } else {
+                tarjeta.style.display = 'none';
+            }
+        });
+    });
+});
